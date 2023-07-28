@@ -13,7 +13,7 @@ class Element(BaseEnum):
 
     Example:
     ```
-    print(Element.FIRE.value)         # 1
+    print(Element.FIRE.value) ksmd         # 1
     print(Element.GRASS.value)        # 3
 
     print(Element.from_string("Ice")) # Element.ICE

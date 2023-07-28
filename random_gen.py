@@ -14,7 +14,7 @@ class RandomGen():
     Usage:
     ```
     RandomGen.set_seed(123)
-    RandomGen.random()           # Random number from 0 to 2^32-1
+    RandomGen.random()            # Random number from 0 to 2^32-1
     RandomGen.randint(1, 10)     # Random number from 1 to 10
     RandomGen.random_chance(0.33) # True 33% of the time, False 67% of the time.
     ```
