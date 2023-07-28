@@ -14,7 +14,7 @@ if __name__ == "__main__":
             "The task number you'd like to run. "
             "Leave blank for all tasks.\n\n"
             "Example: run_tests.py 3\n"
-            "Runs the tests with @number('3.x')."
+            "Runs the tests with @number('3.x').."
         ),
         default="",
         nargs="?",
