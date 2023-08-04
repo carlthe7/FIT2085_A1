@@ -8,7 +8,6 @@ from stats import SimpleStats, ComplexStats
 from data_structures.referential_array import ArrayR
 
 class TestStats(TestCase):
-
     @number("1.1")
     @visibility(visibility.VISIBILITY_SHOW)
     @timeout()
