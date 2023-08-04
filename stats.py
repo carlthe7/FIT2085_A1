@@ -23,11 +23,11 @@ class Stats(abc.ABC):
 
 class SimpleStats(Stats):
     def __init__(self, attack, defense, speed, max_hp) -> None:
-        # TODO: Implement
+        # TODO: Implement the code
         self.attack = attack
         self.defense = defense
         self.speed = speed
-        self.max_hp = max_hp
+        self.max_hp = max_hp 
         pass
 
     def get_attack(self): #return value 
