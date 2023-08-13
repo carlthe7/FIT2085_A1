@@ -62,8 +62,8 @@ class EffectivenessCalculator:
         """
         Initialise the Effectiveness Calculator.
 
-        The first parameter is an ArrayR of size n containing all element_names.
-        The second parameter is an ArrayR of size n*n, containing all effectiveness values.
+        The first parameter is an ArrayR of size n containing all element_names. O(n)
+        The second parameter is an ArrayR of size n*n, containing all effectiveness values. O(n*n)
             The first n values in the array is the effectiveness of the first element
             against all other elements, in the same order as element_names.
             The next n values is the same, but the effectiveness of the second element, and so on.
@@ -75,8 +75,18 @@ class EffectivenessCalculator:
         Water is double effective to Fire, and half effective to Water and Grass [2, 0.5, 0.5]
         Grass is half effective to Fire and Grass, and double effective to Water [0.5, 2, 0.5]
         """
-        raise NotImplementedError
+        self.effectiveness_value = effectiveness_values #return
+        self.elements = ArrayR(len(element_names))
+        self.elements_number = len(element_names)
+        
+        for i in range(len(element_names)):
+           self.elements[i] = Element.from_string(element_names[i])
 
+        if EffectivenessCalculator.instance != None:
+            EffectivenessCalculator.instance = self
+        
+
+    
     @classmethod
     def get_effectiveness(cls, type1: Element, type2: Element) -> float:
         """
@@ -84,7 +94,15 @@ class EffectivenessCalculator:
 
         Example: EffectivenessCalculator.get_effectiveness(Element.FIRE, Element.WATER) == 0.5
         """
-        raise NotImplementedError
+        # cls.instance
+        # cls.type1 = type1
+        # cls.type2 = type2
+        attack_id = cls.instance.elements.index(type1) #get the position for the attack
+        defend_id = cls.instance.elements.index(type2) # get the position for the defend
+        return cls.instance.effectiveness_value[attack_id * cls.instance.elements_number + defend_id] # return the position
+        
+        
+        
 
     @classmethod
     def from_csv(cls, csv_file: str) -> EffectivenessCalculator:
