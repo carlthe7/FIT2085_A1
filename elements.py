@@ -78,14 +78,11 @@ class EffectivenessCalculator:
         self.effectiveness_value = effectiveness_values #return
         self.elements = ArrayR(len(element_names))
         self.elements_number = len(element_names)
-        
         for i in range(len(element_names)):
            self.elements[i] = Element.from_string(element_names[i])
 
         if EffectivenessCalculator.instance != None:
             EffectivenessCalculator.instance = self
-        
-
     
     @classmethod
     def get_effectiveness(cls, type1: Element, type2: Element) -> float:
