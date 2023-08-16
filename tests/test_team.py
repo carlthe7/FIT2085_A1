@@ -121,11 +121,14 @@ class TestTeam(TestCase):
     @visibility(visibility.VISIBILITY_SHOW)
     @timeout()
     def test_optimise_mode(self):
+        class WeakThundrake(Thundrake):
+            def get_max_hp(self):
+                return 5
         my_monsters = ArrayR(4)
         my_monsters[0] = Flamikin   # 6 HP
         my_monsters[1] = Aquariuma  # 8 HP
         my_monsters[2] = Rockodile  # 9 HP
-        my_monsters[3] = Thundrake  # 5 HP
+        my_monsters[3] = WeakThundrake  # 5 HP
         team = MonsterTeam(
             team_mode=MonsterTeam.TeamMode.OPTIMISE,
             selection_mode=MonsterTeam.SelectionMode.PROVIDED,
@@ -146,7 +149,6 @@ class TestTeam(TestCase):
         team.add_to_team(aquariuma)
         team.add_to_team(flamikin)
         # Aquariuma, Thundrake, Flamikin, Rockodile
-
         team.special()
         # Rockodile, Flamikin, Thundrake, Aquariuma
         rockodile = team.retrieve_from_team()
@@ -158,10 +160,8 @@ class TestTeam(TestCase):
         flamikin.set_hp(1)
         team.add_to_team(flamikin)
         team.add_to_team(rockodile)
-
         flamikin = team.retrieve_from_team()
         self.assertIsInstance(flamikin, Flamikin)
-
         team.regenerate_team()
         # Back to normal sort order and Rockodile, Aquariuma, Flamikin, Thundrake
         rockodile = team.retrieve_from_team()

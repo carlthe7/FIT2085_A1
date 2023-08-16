@@ -50,7 +50,10 @@ class ComplexStats(Stats):
         max_hp_formula: ArrayR[str],
     ) -> None:
         # TODO: Implement
-        pass
+        self.attack_formula = attack_formula
+        self.defense_formula = defense_formula
+        self.speed_formula = speed_formula
+        self.max_hp_formula = max_hp_formula
 
     def get_attack(self, level: int):
         raise NotImplementedError
@@ -63,3 +66,5 @@ class ComplexStats(Stats):
 
     def get_max_hp(self, level: int):
         raise NotImplementedError
+
+    #def calc_forumla(self,formula: ArrayR[str],level: int) -> int: 
