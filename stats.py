@@ -1,3 +1,6 @@
+"""Written by: Nguyen Khang Huynh
+Student ID: 33326460
+Last Modified: 24/08/2023"""
 import abc
 
 from data_structures.referential_array import ArrayR
@@ -25,18 +28,38 @@ class Stats(abc.ABC):
 class SimpleStats(Stats):
     def __init__(self, attack, defense, speed, max_hp) -> None:
         # TODO: Implement the code
+        """Get the attack, defense, speed, max_hp value to the simple stats class
+        Input: Attack, Defense, Speed, Max_HP
+        Return: Don't return any value        
+        """
         self.attack = attack
         self.defense = defense
         self.speed = speed
         self.max_hp = max_hp 
 
-    def get_attack(self): #return attack value  O(1) 
+    def get_attack(self):   #Complexity: O(1) for best and worst case
+        """Return the attack of the simple stats 
+        No input
+        Return: Attack       
+        """
         return self.attack
-    def get_defense(self): #return defense value  O(1)
+    def get_defense(self): # O(1) for best and worst case 
+        """Return the defense of the simple stats
+        No input
+        Return: defense       
+        """
         return self.defense
-    def get_speed(self): #return speed value  O(1)
+    def get_speed(self): #Complexity: O(1) for best and worst case 
+        """Return the speed of the simple stats
+        No input
+        Return: speed       
+        """
         return self.speed 
-    def get_max_hp(self): #return max_hp value  O(1)
+    def get_max_hp(self): #Complexity: O(1) for best and worst case 
+        """Return the max hp of the simple stats
+        No input
+        Return: defense       
+        """
         return self.max_hp
     
 
@@ -50,21 +73,45 @@ class ComplexStats(Stats):
         max_hp_formula: ArrayR[str],
     ) -> None:
         # TODO: Implement
+    
+        #Complexity: O(1) for best and worst case 
         self.attack_formula = attack_formula
         self.defense_formula = defense_formula
         self.speed_formula = speed_formula
         self.max_hp_formula = max_hp_formula
 
-    def get_attack(self, level: int): #return attack value   O(1)
+    def get_attack(self, level: int): #Complexity: O(n) for best and worst case  
+        """Return the attack of the complex stats 
+        No input
+        Return: defense       
+        """
         return self.calculate_formula(self.attack_formula,level)    
-    def get_defense(self, level: int): #return defense value  O(1)
-        return self.calculate_formula(self.defense_formula,level)    
-    def get_speed(self, level: int): #return speed value  O(1)
+    def get_defense(self, level: int):#Complexity: O(n) for best and worst case  
+        """Return the defense of the complex stats 
+        No input
+        Return: defense      
+        """
+        return self.calculate_formula(self.defense_formula,level)   
+     
+    def get_speed(self, level: int): #Complexity: O(n) for best and worst case   
+        """Return the speed of the complex stats 
+        No input
+        Return: speed       
+        """
         return self.calculate_formula(self.speed_formula,level)    
-    def get_max_hp(self, level: int): #return max_hp value O(1)
+    def get_max_hp(self, level: int): #Complexity: O(n) for best and worst case   
+       """Return the max_hp of the complex stats 
+        No input
+        Return: speed       
+        """
        return self.calculate_formula(self.max_hp_formula,level)     
     
-    def calculate_formula(self, formula:ArrayR[str], level_num: int) -> int:
+    def calculate_formula(self, formula:ArrayR[str], level_num: int) -> int:  
+        """Calculate and return the calculated attack,speed,get_max_hp,speed in complex stats via those input in Polish notation
+        No input
+        Return: attack, speed, get_max_hp, speed 
+        Complexity: O(n) for best and worst case      
+        """
         stored_number = ArrayStack(len(formula))
 
         for element in formula: # O(n) Loop through the elememnt
@@ -115,11 +162,21 @@ class ComplexStats(Stats):
         return stored_number.pop() #return the final number in the stack O(1)
         
 
-    def square_roorts(self,num:int) -> int: #calculate the square roots O(1)
+    def square_roorts(self,num:int) -> int: 
+        """Calculate and return square roots
+        Input: int num
+        Return: the square root of the input
+        Complexity: O(1) for best and worst case      
+        """
         return num**0.5
 
 
     def middle(self,list: ArrayStack) -> int: #find the median of the 3 numbers O(1)
+        """Calculate and return the median number
+        Input: array stack
+        Return: the median number
+        Complexity: O(1) for best and worst case      
+        """
         num1 = list.pop()
         num2 = list.pop()
         num3 = list.pop()

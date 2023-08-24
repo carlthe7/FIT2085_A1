@@ -129,8 +129,8 @@ class BattleTower:
             self.current_enemy = None
             self.current_enemy_lives = None
 
+    
     def out_of_meta(self) -> ArrayR[Element]:
-        
         sorted_list = ArraySortedList(len(self.external_meta))
         for element in Element:
             if element.value in self.external_meta:

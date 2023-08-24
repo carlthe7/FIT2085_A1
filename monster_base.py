@@ -18,7 +18,7 @@ class MonsterBase(abc.ABC):
         self.level = level
         self.level_current = level # keep the intital level 
        
-
+        #Complexity: O(1) worst and best case
         #Access to the methods
         self.evolution = self.get_evolution()
         self.stats = self.get_simple_stats()
@@ -33,57 +33,57 @@ class MonsterBase(abc.ABC):
         self.defense = self.stats.get_defense()
         
 
-    def get_level(self):
+    def get_level(self): #Complexity: O(1) worst and best case
         """The current level of this monster instance"""
         return self.level
 
-    def level_up(self):
+    def level_up(self): #Complexity: O(1) worst and best case
         """Increase the level of this monster instance by 1"""
         self.level +=1
         self.lost_hp = self.max_hp - self.current_hp
         self.current_hp = self.get_max_hp() - self.lost_hp
         self.max_hp = self.get_max_hp()
         
-    def get_hp(self):
+    def get_hp(self): #Complexity: O(1) worst and best case
         """Get the current HP of this monster instance"""
         return self.current_hp
         
-    def set_hp(self, val):
+    def set_hp(self, val): #Complexity: O(1) worst and best case
         """Set the current HP of this monster instance"""
         self.current_hp = val
 
-    def get_attack(self):
+    def get_attack(self): #Complexity: O(1) worst and best case
         """Get the attack of this monster instance"""
         if self.simple_mode == True:
             return self.attack_mons
 
-    def get_defense(self):
+    def get_defense(self): #Complexity: O(1) worst and best case
         """Get the defense of this monster instance"""
         if self.simple_mode == True:
             return self.defense
 
-    def get_speed(self):
+    def get_speed(self): #Complexity: O(1) worst and best case
         """Get the speed of this monster instance"""
         if self.simple_mode == True:
             return self.speed
 
-    def get_max_hp(self):
+    def get_max_hp(self): #Complexity: O(1) worst and best case
         """Get the maximum HP of this monster instance"""
         if self.simple_mode == True:
             return self.stats.get_max_hp()
 
 
-    def alive(self) -> bool:
+    def alive(self) -> bool: #Complexity: O(1) worst and best case
         """Whether the current monster instance is alive (HP > 0)"""
         if self.current_hp > 0:
             return True
         return False
 
-    def attack(self, other: MonsterBase):
+    def attack(self, other: MonsterBase): #Complexity: will be O(2n) or O(n) worst and best case
         """Attack another monster instance"""
         #Step 1: Compute attack stat vs. defense stat
-        defense_var = other.get_defense()
-        attack_var = self.get_attack()
+        defense_var = other.get_defense() #Complexity: O(n) worst and best case
+        attack_var = self.get_attack() #Complexity: O(n) worst and best case
         own_element = Element.from_string(self.get_element())
         enemy_element = Element.from_string(other.get_element())
 
@@ -106,14 +106,14 @@ class MonsterBase(abc.ABC):
         
         
 
-    def ready_to_evolve(self) -> bool:
+    def ready_to_evolve(self) -> bool: #Complexity: O(1) worst and best case
         """Whether this monster is ready to evolve. See assignment spec for specific logic."""
         if self.get_evolution() != None and self.level != self.level_current:
             return True
         return False
 
 
-    def evolve(self) -> MonsterBase:
+    def evolve(self) -> MonsterBase: #Complexity: O(1) worst and best case
         """Evolve this monster instance by returning a new instance of a monster class."""
         if self.ready_to_evolve() == True:
           NextMonsterBase = self.get_evolution()

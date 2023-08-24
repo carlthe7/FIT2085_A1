@@ -1,3 +1,6 @@
+"""Written by: Nguyen Khang Huynh
+Student ID: 33326460
+Last Modified: 24/08/2023"""
 from __future__ import annotations
 
 from enum import auto
@@ -58,7 +61,7 @@ class EffectivenessCalculator:
 
     instance: Optional[EffectivenessCalculator] = None
 
-    def __init__(self, element_names: ArrayR[str], effectiveness_values: ArrayR[float]) -> None:
+    def __init__(self, element_names: ArrayR[str], effectiveness_values: ArrayR[float]) -> None: 
         """
         Initialise the Effectiveness Calculator.
 
@@ -75,7 +78,9 @@ class EffectivenessCalculator:
         Water is double effective to Fire, and half effective to Water and Grass [2, 0.5, 0.5]
         Grass is half effective to Fire and Grass, and double effective to Water [0.5, 2, 0.5]
         """
-        self.effectiveness_value = effectiveness_values #return
+        
+        #Complexity: O(n) worst and best case
+        self.effectiveness_value = effectiveness_values 
         self.elements = ArrayR(len(element_names))
         self.elements_number = len(element_names)
         for i in range(len(element_names)):
@@ -90,6 +95,7 @@ class EffectivenessCalculator:
         Returns the effectivness of elem1 attacking elem2.
 
         Example: EffectivenessCalculator.get_effectiveness(Element.FIRE, Element.WATER) == 0.5
+        Complexity: O(1) worst and best case
         """
         # cls.instance
         # cls.type1 = type1
