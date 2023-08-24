@@ -12,6 +12,8 @@ from data_structures.queue_adt import CircularQueue
 from data_structures.array_sorted_list import ArraySortedList
 from data_structures.sorted_list_adt import ListItem
 from data_structures.referential_array import ArrayR
+from data_structures.bset import BSet
+from elements import Element
 
 if TYPE_CHECKING:
     from battle import Battle
@@ -47,6 +49,7 @@ class MonsterTeam:
         self.prov_mons = kwargs.get('provided_monsters') #listed of Monster
         self.init_team = ArrayR(self.TEAM_LIMIT)
         self.memory_key = -1
+        self.team_task5 = BSet(len(Element.__members__))
 
         if self.team_mode == self.TeamMode.FRONT: #Stack Ideas
             self.team = ArrayStack(self.TEAM_LIMIT)
@@ -64,6 +67,9 @@ class MonsterTeam:
             self.init_team = self.prov_mons
         else:
             raise ValueError(f"selection_mode {selection_mode} not supported.") 
+    
+    def get_the_element(self):
+        return self.team_task5
 
 
 
@@ -148,8 +154,6 @@ class MonsterTeam:
         elif self.team_mode == self.TeamMode.OPTIMISE: #Sorted listed ideas
             self.team = ArraySortedList(self.TEAM_LIMIT)
             self.memory_key = -1
-
-        
         for i in range(len(self.init_team)):
             if self.init_team[i] != None:
                 self.add_to_team(self.init_team[i]())
@@ -172,8 +176,11 @@ class MonsterTeam:
                     if cur_index == spawner_index:
                         # Spawn this monster
                         self.init_team[i] = monsters[x]
-                        self.add_to_team(monsters[x]())
                         i += 1
+                        element = Element.from_string(monsters[x].get_element())
+                        self.team_task5.add(element.value)
+                        self.add_to_team(monsters[x]())
+                        
                         break
             else:
                 raise ValueError("Spawning logic failed.")
@@ -346,6 +353,8 @@ class MonsterTeam:
         for prov_mons in provided_monsters:
             if prov_mons.can_be_spawned():
                 self.add_to_team(prov_mons())
+                element = Element.from_string(prov_mons.get_element())
+                self.team_task5.add(element.value)
             else:
                 raise ValueError
 

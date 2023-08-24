@@ -1,5 +1,8 @@
 from __future__ import annotations
 import abc
+from elements import EffectivenessCalculator
+from elements import Element
+import math
 
 from stats import Stats
 
@@ -24,6 +27,7 @@ class MonsterBase(abc.ABC):
         #Access to the simple_stats
         self.max_hp = self.get_max_hp()
         self.current_hp = self.max_hp
+
         self.speed = self.stats.get_speed()
         self.attack_mons = self.stats.get_attack()
         self.defense = self.stats.get_defense()
@@ -56,7 +60,7 @@ class MonsterBase(abc.ABC):
     def get_defense(self):
         """Get the defense of this monster instance"""
         if self.simple_mode == True:
-            return self.defense 
+            return self.defense
 
     def get_speed(self):
         """Get the speed of this monster instance"""
@@ -77,10 +81,29 @@ class MonsterBase(abc.ABC):
 
     def attack(self, other: MonsterBase):
         """Attack another monster instance"""
-        # Step 1: Compute attack stat vs. defense stat
+        #Step 1: Compute attack stat vs. defense stat
+        defense_var = other.get_defense()
+        attack_var = self.get_attack()
+        own_element = Element.from_string(self.get_element())
+        enemy_element = Element.from_string(other.get_element())
+
         # Step 2: Apply type effectiveness
+        if defense_var < attack_var / 2:
+            damage = attack_var - defense_var
+        elif defense_var < attack_var:
+            damage = attack_var * (5 / 8) - (defense_var / 4)
+        else:
+            damage = attack_var / 4
+
+        effective_damage = damage * EffectivenessCalculator.get_effectiveness(own_element,enemy_element)
+
         # Step 3: Ceil to int
+        effective_damage = math.ceil(effective_damage)
+
         # Step 4: Lose HP
+        other.set_hp(other.get_hp() - effective_damage)
+        
+        
         
 
     def ready_to_evolve(self) -> bool:
