@@ -14,13 +14,24 @@ from data_structures.array_sorted_list import ListItem
 
 class Iterator(Generic[TypeVar("T")]):
     def __init__(self, battle_tower: BattleTower) -> None:
+        """Assign battle_tower to a variable
+        Input: Battle tower
+        No return 
+        Complexity O(1) for best and worst case       
+        """
         self.battle_tower = battle_tower
         self.battle_tower.next_team()
 
     def __iter__(self):
+        """Return the instance of the class 
+        Complexity O(1) for best and worst case       
+        """
         return self
     
     def __next__(self):
+        """Return the next battle tower 
+        Complexity O(1) for best and O(n) worst case where n is the number of monster in the tower team  
+        """
         if self.battle_tower.battles_remaining():
             tower_ans = self.battle_tower.next_battle()
             return tower_ans
@@ -42,6 +53,7 @@ class BattleTower:
         enemy_lives: Enemy team lives
         current_enemy: Current enemy team
         current_enemy_live: Current enemy team live
+        Complexity O(1) for best and worst case
         """
         self.battle = battle or Battle(verbosity=0)
         self.mine = None
@@ -56,13 +68,16 @@ class BattleTower:
 
 
     def set_my_team(self, team: MonsterTeam) -> None:
+        """Set our team 
+        Complexity O(1) for best and worst case"""
         # Generate the team lives here too.
         self.mine = team
         self.mine_lives = RandomGen.randint(BattleTower.MIN_LIVES, BattleTower.MAX_LIVES)
         self.internal_meta = self.internal_meta.union(self.mine.get_the_element())
 
     def generate_teams(self, n: int) -> None:
-        # Generate both team
+        """Generate both team
+        Complexity O(n) for best and worst case where n is the team size/input of the function"""
         self.enemy_lives = CircularQueue(n)
         self.enemy = CircularQueue(n)
         for _ in range(n):
@@ -72,7 +87,8 @@ class BattleTower:
         self.next_team()
         
     def battles_remaining(self) -> bool:
-        
+        """Return False if either the our team or enemmy team run out of lives and True if the battle continue
+        Complexity O(1) for best and worst case"""
         if self.mine_lives == 0:
             return False
         
@@ -82,7 +98,8 @@ class BattleTower:
             return True
         
     def next_battle(self) -> tuple[Battle.Result, MonsterTeam, MonsterTeam, int, int]:
-
+        """Return Tuple of the Battle Result, Monster Team, my team lives and current enemy lives
+        Complexity O(1) for best and worst case"""
         self.mine.regenerate_team()
         self.current_enemy.regenerate_team()
         
@@ -108,6 +125,8 @@ class BattleTower:
         return tower_ans
     
     def updates(self):
+        """ Update the internal and external meta
+        Complexity O(1) for best and worst case"""
         # Update the internal meta
         team_element = self.mine.get_the_element()
         enemy_element = self.current_enemy.get_the_element()
@@ -122,6 +141,8 @@ class BattleTower:
     
 
     def next_team(self):
+        """Serve the monster out of the enemy team
+        Complexity O(1) for best and worst case"""
         try:
             self.current_enemy = self.enemy.serve()
             self.current_enemy_lives = self.enemy_lives.serve()
@@ -131,6 +152,8 @@ class BattleTower:
 
     
     def out_of_meta(self) -> ArrayR[Element]:
+        """Return the array of elements
+        Complexity O(1) for best and O(n) worst case where n is the length of Elements"""
         sorted_list = ArraySortedList(len(self.external_meta))
         for element in Element:
             if element.value in self.external_meta:
@@ -144,6 +167,8 @@ class BattleTower:
 
     
     def __iter__(self):
+        """Return the instance of the class
+        Complexity O(1) for best and worst case"""
         return self
     
 

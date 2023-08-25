@@ -32,6 +32,7 @@ class Battle:
         * level and evolve monsters
         * remove fainted monsters and retrieve new ones.
         * return the battle result if completed.
+        Complexity O(n) for best and worst case where n is the length of both team
         """
     
         # Get the action from each team
@@ -103,7 +104,12 @@ class Battle:
                 self.out1 = self.team1.retrieve_from_team()
                 self.out2 = self.team2.retrieve_from_team()
                 return None
+            
+
+
     def attack_before(self, team: MonsterTeam, act: Battle.Action, mons: MonsterBase): # before the battle
+        """Return the monster to join in the battle
+        Complexity O(n) for best and worst case where n is the of the team """
         if act == Battle.Action.SPECIAL:
             team.add_to_team(mons)
             team.special()
@@ -116,6 +122,8 @@ class Battle:
             return mons
 
     def battle_attack(self, act1: Battle.Action, act2:Battle.Action): #during the battle
+        """Let two monster attack each other, compare special condition
+        Complexity O(1) for best and worst case"""
         if act1 == Battle.Action.ATTACK and act2 == Battle.Action.ATTACK:
             speed_1 = self.out1.get_speed()
             speed_2 = self.out2.get_speed()
@@ -138,6 +146,9 @@ class Battle:
         elif act1 == Battle.Action.ATTACK:
             self.out1.attack(self.out2)
 
+    
+    
+    
     def battle(self, team1: MonsterTeam, team2: MonsterTeam) -> Battle.Result:
         if self.verbosity > 0:
             print(f"Team 1: {team1} vs. Team 2: {team2}")

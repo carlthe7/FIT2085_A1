@@ -79,11 +79,11 @@ class MonsterBase(abc.ABC):
             return True
         return False
 
-    def attack(self, other: MonsterBase): #Complexity: will be O(2n) or O(n) worst and best case
+    def attack(self, other: MonsterBase): #Complexity: will be O(1) worst and best case
         """Attack another monster instance"""
         #Step 1: Compute attack stat vs. defense stat
-        defense_var = other.get_defense() #Complexity: O(n) worst and best case
-        attack_var = self.get_attack() #Complexity: O(n) worst and best case
+        defense_var = other.get_defense() #Complexity: O(1) worst and best case
+        attack_var = self.get_attack() #Complexity: O(1) worst and best case
         own_element = Element.from_string(self.get_element())
         enemy_element = Element.from_string(other.get_element())
 

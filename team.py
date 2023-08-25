@@ -42,7 +42,12 @@ class MonsterTeam:
 
     TEAM_LIMIT = 6
 
-    def __init__(self, team_mode: TeamMode, selection_mode, **kwargs) -> None:
+    def __init__(self, team_mode: TeamMode, selection_mode, **kwargs) -> None:    
+        """Set variable and changing team following the team mode
+        Input: Team mode, selection mode, list of dictonary
+        No return 
+        Complexity O(comp) for best and worst case       
+        """
         # Add any preinit logic here.
         self.team_mode = team_mode
         self.key = kwargs.get('sort_key') #key
@@ -68,15 +73,30 @@ class MonsterTeam:
         else:
             raise ValueError(f"selection_mode {selection_mode} not supported.") 
     
-    def get_the_element(self):
+    def get_the_element(self): 
+        """Return the elements for task 5
+        No input
+        Return: the elements for task 5 
+        Complexity O(1) for best and worst case      
+        """
         return self.team_task5
 
 
 
     def __len__(self):
+        """Return the length of the team
+        No input
+        Return: the length of the  team
+        Complexity O(1) for best and worst case      
+        """
         return len(self.team) #return the number of monster in the team
     
     def add_to_team(self, monster: MonsterBase):
+        """Add monster to the team
+        No input
+        Return: the length of the  team
+        Complexity O(log(n)) for best and worst case where n is the team size     
+        """
         if self.team.is_full():
             return
         if self.team_mode == self.TeamMode.FRONT: #Stack Ideas
@@ -101,6 +121,11 @@ class MonsterTeam:
         
 
     def retrieve_from_team(self) -> MonsterBase:
+        """Retrieve monster out of team
+        No input
+        Return: the monster from the team
+        Complexity O(1) for best and worst case
+        """
         if self.team.is_empty():
             return
         if self.team_mode == self.TeamMode.FRONT: #Stack Ideas
@@ -113,6 +138,11 @@ class MonsterTeam:
 
 
     def special(self) -> None:
+        """Do action revelant to the team mode
+        No input
+        Return: the new positon of the monster
+        Complexity O(n) for best and worst case where n is the team size
+        """
         newStack = ArrayStack(self.TEAM_LIMIT)
         newQueue = CircularQueue(self.TEAM_LIMIT)
         if self.team_mode == self.TeamMode.FRONT: #Stack Ideas
@@ -147,6 +177,11 @@ class MonsterTeam:
                 self.team.add(mons)
             
     def regenerate_team(self) -> None:
+        """Do action revelant to the team mode
+        No input
+        Return: the initial team
+        Complexity O(n) for best and worst case where n is the initial team size
+        """
         if self.team_mode == self.TeamMode.FRONT: #Stack Ideas
             self.team = ArrayStack(self.TEAM_LIMIT)
         elif self.team_mode == self.TeamMode.BACK: # Circular Queue Ideas
@@ -159,6 +194,11 @@ class MonsterTeam:
                 self.add_to_team(self.init_team[i]())
 
     def select_randomly(self):
+        """Select the random monster to add to team
+        No input
+        Return: the initial team
+        Complexity O(comp) for best and worst case
+        """
         team_size = RandomGen.randint(1, self.TEAM_LIMIT)
         monsters = get_all_monsters()
         n_spawnable = 0
@@ -186,7 +226,6 @@ class MonsterTeam:
                 raise ValueError("Spawning logic failed.")
 
     def select_manually(self):
-        #raise NotImplementedError
         """
         Prompt the user for input on selecting the team.
         Any invalid input should have the code prompt the user again.
@@ -323,7 +362,7 @@ class MonsterTeam:
                         print("This monster cannot be spawned.")
                 else:
                     print("Invalid input")
-                
+        #Complexity O(comp) for best and worst case    
            
             
 
@@ -357,6 +396,8 @@ class MonsterTeam:
                 self.team_task5.add(element.value)
             else:
                 raise ValueError
+        #Complexity O(comp) for best and worst case    
+           
 
 
     def choose_action(self, currently_out: MonsterBase, enemy: MonsterBase) -> Battle.Action:

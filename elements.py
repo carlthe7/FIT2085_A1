@@ -79,7 +79,7 @@ class EffectivenessCalculator:
         Grass is half effective to Fire and Grass, and double effective to Water [0.5, 2, 0.5]
         """
         
-        #Complexity: O(n) worst and best case
+        #Complexity: O(len(element)) worst and best case
         self.effectiveness_value = effectiveness_values 
         self.elements = ArrayR(len(element_names))
         self.elements_number = len(element_names)
